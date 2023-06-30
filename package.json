@@ -4,6 +4,7 @@
   "description": "This action will syncronise your repository issues into a Notion Database.",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prep": "ncc build index.js --license licenses.txt"
   },
@@ -29,5 +30,8 @@
     "@octokit/auth-token": "^2.5.0",
     "@octokit/core": "^3.5.1",
     "@octokit/plugin-rest-endpoint-methods": "^2.4.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.1"
   }
 }
