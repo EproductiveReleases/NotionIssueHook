@@ -156,6 +156,9 @@ async function createCommit(notion, commits) {
 (async () => {
   try {
     const notion = new Client({ auth: core.getInput("notion_secret") });
+
+    if (!notion) throw("Could not connect to notion")
+    if (!notion.pages) throw("Could not retrieve notion pages")
     createCommit(notion, github.context.payload.commits);
   } catch (error) {
     core.setFailed(error.message);
