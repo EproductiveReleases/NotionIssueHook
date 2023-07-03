@@ -9,25 +9,40 @@ const {
 } = require("@octokit/plugin-rest-endpoint-methods");
 
 async function createCommit(notion, commits) {
+  /**
+   * OPTIONALLY LIST CHANGED FILES
+   */
   let fileFormat = core.getInput("files_format");
+
   if (core.getInput("gh_token") === "") fileFormat = "none";
+
   var files = await getFiles();
+
+  /**
+   * ITERATE THROUGH ALL COMMITS
+   */
   commits.forEach((commit) => {
     const array = commit.message.split(/\r?\n/);
     const title = array.shift();
     let description = "";
+
     array.forEach((element) => {
       description += " " + element;
     });
 
-    const task = commit.message.substring(commit.message.indexOf("atnt:") + 6);
-
-    // search for a page in the Notion database "Tasks" given the task name
+    /**
+     * search for a page in the Notion database given the task name
+     */
+    /*const task = commit.message.substring(commit.message.indexOf("atnt:") + 6);
     const page = notion.pages.filter(
       (page) => page.properties.title === task
-    )[0];
+    )[0];*/
 
+    /**
+     * LIST CHANGED FILES
+     */
     let filesBlock;
+
     switch (fileFormat) {
       case "text-list":
         core.info("Formatting Notion Block for:");
@@ -75,7 +90,6 @@ async function createCommit(notion, commits) {
       case "none":
         core.info("No file will be listed");
         break;
-
       default:
         core.setFailed(
           "Other files list tipes not supported or file type not specified."
@@ -83,6 +97,9 @@ async function createCommit(notion, commits) {
         break;
     }
 
+    /**
+     * CREATE THE ENTRY IN THE DB
+     */
     notion.pages.create({
       parent: {
         database_id: core.getInput("notion_database"),
@@ -98,9 +115,9 @@ async function createCommit(notion, commits) {
             },
           ],
         },
-        task: {
-          relation: [{ id: page.id }],
-        },
+        //task: {
+        //  relation: [{ id: page.id }],
+        //},
         [core.getInput("commit_url")]: {
           url: commit.url,
         },
