@@ -13,10 +13,13 @@ inputs:
   gh_token:
     description: "Create a personal access token on GitHub for the GitHub Api"
     required: true
+  files_format:
+    description: "Which Format you would like to get your list of files"
+    default: "text-list"
   commit_description:
     description: "Name of the Database column for the description field: this is the commit message after a carriage return."
     required: true
-    default: "description"
+    default: "Description"
   commit_url:
     description: "Name of Database column for commit url"
     required: true
@@ -29,9 +32,6 @@ inputs:
     description: "MultiSelect field for the project name: please pre-fill it in Notion first!"
     required: true
     default: "Project"
-  files_format:
-    description: "Which Format you would like to get your list of files"
-    default: "text-list"
 runs:
   using: 'node12'
   main: 'dist/index.js'
