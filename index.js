@@ -10,7 +10,7 @@ const {
 
 async function createCommit(notion, commits) {
   let fileFormat = core.getInput("files_format");
-  if (core.getInput("github_token") === "") fileFormat = "none";
+  if (core.getInput("gh_token") === "") fileFormat = "none";
   var files = await getFiles();
   commits.forEach((commit) => {
     const array = commit.message.split(/\r?\n/);
@@ -166,7 +166,7 @@ async function getFiles() {
   try {
     const MyOctokit = Octokit.plugin(restEndpointMethods);
     const octokit = new MyOctokit({
-      auth: core.getInput("github_token", { required: true }),
+      auth: core.getInput("gh_token", { required: true }),
     });
     const format = core.getInput("files_format", { required: true });
 

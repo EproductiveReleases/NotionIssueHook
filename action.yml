@@ -10,6 +10,9 @@ inputs:
   notion_database:
     description: 'the id of the database you want to save the commits'
     required: true
+  gh_token:
+    description: "Create a personal access token on GitHub for the GitHub Api"
+    required: true
   commit_description:
     description: "Name of the Database column for the description field: this is the commit message after a carriage return."
     required: true
@@ -29,8 +32,6 @@ inputs:
   files_format:
     description: "Which Format you would like to get your list of files"
     default: "text-list"
-  token:
-    description: "Create a personal access token on GitHub for the GitHub Api"
 runs:
   using: 'node12'
   main: 'dist/index.js'
