@@ -31,7 +31,7 @@ async function createCommit(notion, commits) {
     });
 
     /**
-     * search for a page in the Notion database given the task name
+     * search for a page in the Notion database given the task name - api changed
      */
     /*const task = commit.message.substring(commit.message.indexOf("atnt:") + 6);
     const page = notion.pages.filter(
